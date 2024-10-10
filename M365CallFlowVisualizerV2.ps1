@@ -6084,10 +6084,8 @@ function Get-NestedCallFlow {
 
     }
 
-    if (Compare-Object -ReferenceObject $nestedVoiceApps -DifferenceObject $processedVoiceApps) {
-
+    if ($null -ne $nestedVoiceApps -and $nestedVoiceApps.Count -gt 0 -and (Compare-Object -ReferenceObject $nestedVoiceApps -DifferenceObject $processedVoiceApps)) {
         . Get-NestedCallFlow
-
     }
 
 }
