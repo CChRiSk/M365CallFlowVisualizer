@@ -2379,7 +2379,12 @@ defaultCallFlowGreeting$($aaDefaultCallFlowAaObjectId)>$defaultCallFlowGreeting]
                 switch ($defaultCallFlowTargetType) {
                     User { 
                         $defaultCallFlowTargetTypeFriendly = "User"
-                        $defaultCallFlowTargetUser = (Get-MgUser -UserId $($MenuOption.CallTarget.Id))
+                        try {
+                            $defaultCallFlowTargetUser = (Get-MgUser -UserId $($MenuOption.CallTarget.Id))
+                        } catch {
+                            Write-Warning "Resource '$($MenuOption.CallTarget.Id)' does not exist or one of its queried reference-property objects are not present. Status: 404 (NotFound) ErrorCode: Request_ResourceNotFound"
+                            $defaultCallFlowTargetUser = $null
+                        }
                         $defaultCallFlowTargetName = Optimize-DisplayName -String $defaultCallFlowTargetUser.DisplayName
                         $defaultCallFlowTargetIdentity = $defaultCallFlowTargetUser.Id
 
