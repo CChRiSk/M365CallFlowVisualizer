@@ -6083,6 +6083,15 @@ function Get-NestedCallFlow {
         }
 
     }
+        # Populate $nestedVoiceApps with actual data
+    # Assuming Get-NestedVoiceApps is a function that retrieves the nested voice apps
+    $nestedVoiceApps = Get-NestedCallFlow
+        # Check if $nestedVoiceApps is null or empty before using it in Compare-Object
+    if ($null -ne $nestedVoiceApps -and $nestedVoiceApps.Count -gt 0) {
+        Compare-Object -ReferenceObject $nestedVoiceApps -DifferenceObject $otherVoiceApps
+    } else {
+        Write-Error "The variable \$nestedVoiceApps is null or empty."
+    }
 
     if ($null -ne $nestedVoiceApps -and $nestedVoiceApps.Count -gt 0 -and (Compare-Object -ReferenceObject $nestedVoiceApps -DifferenceObject $processedVoiceApps)) {
         . Get-NestedCallFlow
